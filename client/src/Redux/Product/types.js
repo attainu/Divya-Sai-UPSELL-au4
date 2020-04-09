@@ -1,0 +1,2 @@
+export const FILTER_BY_CATEGORY = "FILTER_BY_CATEGORY";
+export const FILTER_BY_PRICE = "FILTER_BY_PRICE";
