@@ -239,6 +239,11 @@ a{
 
 .filter-sidebar{
   width:25%;
+  padding:30px;
+}
+
+.range-slider{
+  color:#F3CDCD
 }
 
 .product-wrapper{
