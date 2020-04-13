@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-
 class Product extends Component {
     render () {
         const {product_image,product_title, product_price} = this.props.details;
@@ -17,10 +16,10 @@ class Product extends Component {
                 <div className="hover-cart">
                     <i className="fa fa-shopping-cart"></i>
                 </div>
-            </div>
+            </div> 
             </React.Fragment>
         )
     }
 }
 
-export default Product
+export default Product;

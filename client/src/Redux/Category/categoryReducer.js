@@ -2,11 +2,13 @@ const INITIAL_STATE = {
     categories: [
          {
              category_id:1,
-             category_name:"Wedding Cakes"
+             category_name:"Wedding Cakes",
+             isChecked:false
          },
          {
             category_id:2,
-            category_name:"Birthday Cakes"
+            category_name:"Birthday Cakes",
+            isChecked:false
          }    
  ]
 };

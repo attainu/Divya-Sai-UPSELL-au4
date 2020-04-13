@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import Product from './Product';
 
-
-
 class ProductList extends Component {
     render () {
         return (
@@ -12,8 +10,7 @@ class ProductList extends Component {
                         return(
                         <Product details={product} key={index} />
                         )
-                    })}
-                    
+                    })}                    
                 </div>
                 
             </React.Fragment>
