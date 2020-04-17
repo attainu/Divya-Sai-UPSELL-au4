@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 
 
+
 class Header extends Component {
     render () {
         return (
@@ -25,7 +26,7 @@ class Header extends Component {
                 <div className="container">
                <div className="row bottom-header">
                    <div className="logo">
-                       <Link to="/"><img src="logo.png" alt="logo"/></Link>
+                       <Link to="/"><img src={process.env.PUBLIC_URL + '/logo.png'} alt="logo"/></Link>
                    </div>
 
                    <nav className="navigation">

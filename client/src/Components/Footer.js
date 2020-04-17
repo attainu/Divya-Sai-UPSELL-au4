@@ -11,7 +11,7 @@ class Footer extends Component {
                         <div className="about">
                             
                             <div className="logo">
-                                <img src="logo-pink.png" alt="logo"/>
+                                <img src={process.env.PUBLIC_URL + '/logo-pink.png'}alt="logo"/>
                             </div>
                             <p>
                             Just Cakes Bakeshop, as featured on FOOD NETWORK, is known for it’s clean, modern yet elegant vibe and finely curated high-quality

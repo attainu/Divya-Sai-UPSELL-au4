@@ -7,7 +7,7 @@ import Filter from '../../Components/Filter';
 
 import {connect} from 'react-redux';
 
-import {FILTER_BY_PRICE_METHOD, FILTER_BY_CATEGORY_METHOD} from './../../Redux/Product/ProductActions';
+import {FILTER_BY_CATEGORY_METHOD} from './../../Redux/Product/ProductActions';
 
 
 
@@ -20,7 +20,7 @@ class ShopPage extends Component {
 
 
             currentPage:1,
-            productsPerPage:3
+            productsPerPage:8
             
         }     
            
@@ -152,7 +152,7 @@ let mapStatetoProps = (state)=>{
 }
 
 let mapDispatchtoProps = {
-    FILTER_BY_PRICE_METHOD,
+    
     FILTER_BY_CATEGORY_METHOD
 }
 
