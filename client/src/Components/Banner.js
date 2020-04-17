@@ -6,7 +6,8 @@ class Banner extends Component {
         return (
             <React.Fragment>
                 <div className="banner">
-                    <img src={`./images/${this.props.imgName}`} alt="" />
+                    {console.log(this.props)}
+                    <img src={process.env.PUBLIC_URL+`../images/${this.props.imgName}`} alt={`${this.props.imgName}`} />
                     </div>
             </React.Fragment>
         )

@@ -12,9 +12,10 @@ import AboutPage from './Pages/User/AboutPage';
 import ShopPage from './Pages/User/ShopPage';
 import ContactPage from './Pages/User/ContactPage';
 
+import ProductDetailsPage from './Pages/User/ProductDetailsPage';
+
 import Login_Register_Page from './Pages/Login_Register_Page';
-
-
+import CartPage from './Pages/User/CartPage';
 
 
 class App extends React.Component {
@@ -29,7 +30,8 @@ class App extends React.Component {
           <Route  path="/shop" component={ShopPage} />
           <Route path="/contact" component={ContactPage} />
           <Route path="/login-register" component={Login_Register_Page} />
-          {/* <Route  path="/productdetails" component="ProductDetailsPage" /> */}
+          <Route  path="/productdetails/:id" component={ProductDetailsPage} /> 
+          <Route path="/cart" component={CartPage} />
         </Switch>
         <Footer/>
       </React.Fragment>
