@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import Banner from '../../Components/Banner';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
+import { DELETE_FROM_CART_METHOD, ADD_TO_QUANTITY_METHOD, SUBTRACT_FROM_QUANTITY_METHOD} from '../../Redux/Cart/cartActions';
 
 class CartPage extends Component {
-
-    constructor(props){
+     constructor(props){
         super(props);
     }
     render () {
@@ -29,6 +29,7 @@ class CartPage extends Component {
                  {
                     this.props.cartitems.map((item,index)=>{
                      
+                    
                     return(
                         <tr>
                             <td data-th="Product">
@@ -46,13 +47,15 @@ class CartPage extends Component {
 							</td>
 							<td data-th="Price"><i class="fa fa-inr">{item.productprice}</i></td>
 							<td data-th="Quantity">
-								<input type="number" class="form-control text-center" value={item.quantity}/>
+                                <span><i class="fa fa-plus" onClick={()=>this.props.ADD_TO_QUANTITY_METHOD(index)}></i></span>
+                                <span> {item.quantity}</span>
+                                <span><i class="fa fa-minus" onClick={()=>this.props.SUBTRACT_FROM_QUANTITY_METHOD(index)}></i></span>
 							</td>
                             <td data-th="Subtotal" class="text-center"><i class="fa fa-inr">
                                 {item.quantity*item.productprice}</i></td>
 							<td class="actions" data-th="">
-								<button class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button>
-								<button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>								
+								
+								<button class="btn btn-danger btn-sm" onClick={()=>{this.props.DELETE_FROM_CART_METHOD(index)}}><i class="fa fa-trash-o"></i></button>								
 							</td>
                             </tr>
                     )  
@@ -71,7 +74,7 @@ class CartPage extends Component {
 							<td colspan="2" class="hidden-xs"></td>
 							<td class="hidden-xs text-center"><strong>Total <i class="fa fa-inr"></i>
                                 {this.props.total}</strong></td>
-							<td><a href="#" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
+							<td><Link to="/login-register"><button class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></button></Link></td>
 						</tr>
 					</tfoot>
 
@@ -110,7 +113,9 @@ const mapStatetoProps = (state)=>{
 }
 
 const mapDispatchtoProps = {
-
+            DELETE_FROM_CART_METHOD,
+            ADD_TO_QUANTITY_METHOD,
+            SUBTRACT_FROM_QUANTITY_METHOD
 }
 
 export default connect(mapStatetoProps, mapDispatchtoProps)(CartPage);

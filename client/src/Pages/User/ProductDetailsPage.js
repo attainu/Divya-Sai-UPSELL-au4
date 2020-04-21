@@ -9,7 +9,7 @@ import {AddtoCart} from '../../Redux/Cart/cartActions';
 
 class ProductDetailsPage extends Component {
      state = {
-        quantity:"1",
+        quantity:1,
         deliverydate:"",
         selHour:"",
         selMin:"",
