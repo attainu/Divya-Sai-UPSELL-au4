@@ -1,4 +1,4 @@
-import { FILTER_BY_CATEGORY, FETCH_PRODUCT } from './types';
+import { FILTER_BY_CATEGORY, FILTER_BY_SEARCH, SET_SEARCH_TERM } from './types';
 
 const INITIAL_STATE = {
        products: [
@@ -132,6 +132,7 @@ const INITIAL_STATE = {
 
     ],
     FilteredProducts:[],
+    searchterm:""
   };
   
   export const productReducer = (state = INITIAL_STATE, action) => {
@@ -201,10 +202,31 @@ const INITIAL_STATE = {
                                 console.log(filtered);
                                 
                                 return {...state, FilteredProducts:filtered};
+    case FILTER_BY_SEARCH:  
+                            console.log("state", action.type, action.payload);
+                            stateCopy.searchterm = action.payload;
+                            filter = stateCopy.products.filter((product)=>
+                                                {
+                                                    return (product.category_name.toLowerCase().indexOf(action.payload.toLowerCase())!==-1 ||
+                                                    product.product_title.toLowerCase().indexOf(action.payload.toLowerCase())!==-1);
+                                                 
+                                                })
+                            console.log(filter)
+                            filter.map((product)=>{
+                                filtered.push(product);
+                            })
 
-        
+
+                            
+                            return {...state, FilteredProducts:filtered,searchterm:action.payload};
+
+    // case SET_SEARCH_TERM: 
+    //                         console.log(action.type, action.payload);
+    //                         stateCopy.searchterm = action.payload;
+    //                         return {...state, searchterm:action.payload};
                                 
       default:
         return state;
     }
+    
   };

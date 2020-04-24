@@ -16,6 +16,8 @@ import ProductDetailsPage from './Pages/User/ProductDetailsPage';
 
 import Login_Register_Page from './Pages/Login_Register_Page';
 import CartPage from './Pages/User/CartPage';
+import CheckoutPage from './Pages/User/CheckoutPage';
+import TrackYourOrderPage from './Pages/User/TrackYourOrderPage';
 
 
 class App extends React.Component {
@@ -32,6 +34,8 @@ class App extends React.Component {
           <Route path="/login-register" component={Login_Register_Page} />
           <Route  path="/productdetails/:id" component={ProductDetailsPage} /> 
           <Route path="/cart" component={CartPage} />
+          <Route path="/checkout" component={CheckoutPage} />
+          <Route path="/trackorder" component={TrackYourOrderPage} />
         </Switch>
         <Footer/>
       </React.Fragment>

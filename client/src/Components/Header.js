@@ -1,11 +1,36 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
+import {connect} from 'react-redux';
+import {withRouter} from 'react-router';
 
-
+import {FILTER_BY_SEARCH_METHOD, SET_SEARCH_TERM_METHOD} from '../Redux/Product/ProductActions';
 
 class Header extends Component {
+
+    state={
+        searchterm:"",
+        showMe:false
+    }
+
+    componentDidUpdate(prevState, prevProps){
+        if(prevState.searchterm!==this.state.searchterm){
+            this.props.FILTER_BY_SEARCH_METHOD(this.state.searchterm);
+        }
+    }
+      
+
+    handleToggle(){
+        if(this.state.showMe){
+            this.setState({showMe:false})
+        }
+        else{
+            this.setState({showMe:true})
+        }
+    }
+
     render () {
-        return (
+
+       return (
             <React.Fragment>
            <div className="container">
                <div className="row top-header">
@@ -40,7 +65,20 @@ class Header extends Component {
 
                     <nav className="nav-icons">
                     <ul>
-                            <li><Link to=""><i className="fa fa-search"></i></Link></li>
+                            <li>
+                                    {
+                                        this.state.showMe?
+                                        <input type="text" onChange={(e)=>{
+                                            this.setState({searchterm:e.target.value});
+                                            this.props.history.push("/shop");
+                                            
+                                        }}
+                                            style={{"width":"200px", "margin-right":"10px"}}/>:
+                                        null
+                                    }
+                                    <i className="fa fa-search" onClick={()=>this.handleToggle()}></i>
+                                
+                            </li>
                             <li><Link to="/login-register"><i className="fa fa-user"></i></Link></li>
                             <li><Link to="/cart"><i className="fa fa-shopping-cart"></i></Link></li>
                             
@@ -55,4 +93,9 @@ class Header extends Component {
     }
 }
 
-export default Header;
+const mapDispatchtoProps = {
+    FILTER_BY_SEARCH_METHOD,
+    SET_SEARCH_TERM_METHOD
+}
+
+export default withRouter(connect(null,mapDispatchtoProps)(Header));

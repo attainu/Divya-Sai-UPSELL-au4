@@ -25,9 +25,10 @@ class ShopPage extends Component {
         }     
            
     componentDidUpdate(prevProps,prevState){
-        if(prevState!==this.state){
+        if((prevState.selectedCategory!==this.state.selectedCategory)|| (prevState.pricevalue!==this.state.pricevalue)){
             this.props.FILTER_BY_CATEGORY_METHOD(this.state.selectedCategory,this.state.pricevalue);
         }  
+        
     }
     
 
@@ -112,7 +113,7 @@ class ShopPage extends Component {
                     
                     </div>
                     <div className="product-wrapper">
-                    {(this.state.pricevalue==0 && this.state.selectedCategory.length===0)
+                    {(this.state.pricevalue==0 && this.state.selectedCategory.length===0 && this.props.searchterm==="")
                      && <div>
                      <ProductList products={currentProducts} /> 
                      <Pagination productsPerPage={this.state.productsPerPage}
@@ -121,7 +122,7 @@ class ShopPage extends Component {
                     }
                     
 
-                    {(this.state.pricevalue!==0 || this.state.selectedCategory.length!==0)
+                    {(this.state.pricevalue!==0 || this.state.selectedCategory.length!==0 || this.props.searchterm!=="")
                      &&
                      <div>
                      <ProductList products={currentfilteredProducts}/>
@@ -147,7 +148,8 @@ let mapStatetoProps = (state)=>{
     return{
         categories:state.categoryReducer.categories,
         products:state.productReducer.products,
-        filtered:state.productReducer.FilteredProducts
+        filtered:state.productReducer.FilteredProducts,
+        searchterm:state.productReducer.searchterm
     }
 }
 
