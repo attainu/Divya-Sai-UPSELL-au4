@@ -19,6 +19,10 @@ import CartPage from "./Pages/User/CartPage";
 import CheckoutPage from "./Pages/User/CheckoutPage";
 import TrackYourOrderPage from "./Pages/User/TrackYourOrderPage";
 import { API } from "./backend";
+import AdminRoute from "./auth/helper/AdminRoutes";
+import PrivateRoute from "./auth/helper/PrivateRoutes";
+import UserDashboard from "./Pages/User/UserDashboard";
+import AdminDashboard from "./Pages/User/AdminDashboard";
 
 class App extends React.Component {
   render() {
@@ -37,6 +41,8 @@ class App extends React.Component {
           <Route path="/cart" component={CartPage} />
           <Route path="/checkout" component={CheckoutPage} />
           <Route path="/trackorder" component={TrackYourOrderPage} />
+          <PrivateRoute path="/user/dashboard" component={UserDashboard} />
+          <AdminRoute path="/admin/dashboard" component={AdminDashboard} />
         </Switch>
         <Footer />
       </React.Fragment>
