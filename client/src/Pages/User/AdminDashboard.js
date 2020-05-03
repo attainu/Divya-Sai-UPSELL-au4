@@ -5,7 +5,27 @@ import { fetchCats } from "../../Redux/Category/categoryActions";
 import { API } from "../../backend";
 
 const fetchSetCategories = (props) => {
-  fetch(`${API}/categories`, {
+  props.fetchCats();
+};
+
+// const fetchSetProducts = (props) => {
+//   fetch(`${API}/products`, {
+//     method: "GET",
+//     headers: {
+//       Accept: "application/json",
+//       "Content-Type": "application/json",
+//     },
+//   })
+//     .then((res) => {
+//       res.json().then((data) => {
+//         props.fetchProds(data);
+//       });
+//     })
+//     .catch((err) => console.log(err));
+// };
+
+const fetchSetOrders = (props) => {
+  fetch(`${API}/orders`, {
     method: "GET",
     headers: {
       Accept: "application/json",
@@ -14,7 +34,7 @@ const fetchSetCategories = (props) => {
   })
     .then((res) => {
       res.json().then((data) => {
-        props.fetchCats(data);
+        props.fetchOrders(data);
       });
     })
     .catch((err) => console.log(err));
@@ -57,26 +77,26 @@ const AdminDashboard = (props) => {
                 Home Tab.
               </div>
               <div class="tab-pane" id="profile">
-                <Categories />
+                <Categories Categories={props.categories} />
               </div>
               <div class="tab-pane" id="messages">
-                Messages Tab.
+                <Products Products={props.products} />
               </div>
               <div class="tab-pane" id="settings">
-                Settings Tab.
+                <Orders Orders={props.orders} />
               </div>
             </div>
           </div>
           <div class="clearfix"></div>
         </div>
       </div>
-      {fetchSetCategories(props)}
     </div>
   );
 };
 const mapStatetoProps = (state) => {
   return {
     categories: state.categoryReducer.categories,
+    products: state.productReducer.products,
   };
 };
 
