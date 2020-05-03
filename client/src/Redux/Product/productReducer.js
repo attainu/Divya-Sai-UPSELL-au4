@@ -7,7 +7,6 @@ const INITIAL_STATE = {
                 product_image:"images/Product_Images/Wedding-Cake1.jpg",
                 product_title:"Chocolate Cake",
                 product_price:1000,
-                category_id:1,
                 category_name:"Wedding Cakes"
             },
             {

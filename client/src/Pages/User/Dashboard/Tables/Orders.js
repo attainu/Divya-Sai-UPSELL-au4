@@ -1,17 +1,16 @@
 import React from "react";
 
-const Categories = (props) => {
+const Orders = (props) => {
   return (
     <div>
-        <div class="table-wrapper">
+        {/* <div class="table-wrapper">
             <div class="table-title">
                 <div class="row">
                     <div class="col-sm-6">
-						<h2>Manage <b>Categories</b></h2>
+						<h2>Manage <b>Orders</b></h2>
 					</div>
 					<div class="col-sm-6">
-						<a href="#addEmployeeModal" data-toggle="modal" style={{"padding-right":"10px"}}><i class="material-icons">&#xE147;</i><span style={{"vertical-align":"top"}}>Add New Category</span></a>
-						<a href="#deleteEmployeeModal" data-toggle="modal"><i class="material-icons">&#xE15C;</i><span style={{"vertical-align":"top"}}>Delete</span></a>						
+												
 					</div>
                 </div>
             </div>
@@ -24,9 +23,9 @@ const Categories = (props) => {
 								<label for="selectAll"></label>
 							</span>
 						</th>
-                        <th>Category Id</th>
-                        <th>Category Name</th>
-						<th>IsChecked</th>
+                        <th>Order Id</th>
+                        <th>Product Title</th>
+						<th>Product Price</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -46,7 +45,7 @@ const Categories = (props) => {
                                 <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                             </td>
                         </tr>
-                    {props.Categories.map((category)=>{
+                    {props.Orders.map((category)=>{
                             return (<tr>
                             <td>
                                 <span class="custom-checkbox">
@@ -70,10 +69,10 @@ const Categories = (props) => {
 					
                 </tbody>
             </table>
-        </div>
+        </div> */}
         </div>
    
  
   );
 };
-export default Categories;
+export default Orders;
