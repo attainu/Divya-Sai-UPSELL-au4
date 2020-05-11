@@ -17,6 +17,7 @@ exports.getProductById = (req, res, next, id) => {
 };
 
 exports.createProduct = (req, res) => {
+  console.log(req.body);
   let form = new formidable.IncomingForm();
   form.keepExtensions = true;
 
@@ -27,8 +28,9 @@ exports.createProduct = (req, res) => {
       });
     }
     //destructure the fields
-    const { name, description, price, category, stock } = fields;
-    if (!name || !description || !price || !category || !stock) {
+    const { name, description, price, category } = fields;
+    console.log(fields);
+    if (!name || !description || !price || !category) {
       return res.status(400).json({
         error: "Please include all fields",
       });
@@ -42,22 +44,27 @@ exports.createProduct = (req, res) => {
           error: "File size too big",
         });
       }
+      console.log(file.photo.path);
       product.photo.data = fs.readFileSync(file.photo.path);
       product.photo.contentType = file.photo.type;
     }
     //save to the DB
-    product.save((err, product) => {
-      if (err) {
-        return res.status(400).json({
-          error: "Saving Cake in DB failed",
-        });
-      }
-      res.json(product);
-    });
+
+    product.save().then((product) =>
+      product.populate("category").execPopulate((err, products) => {
+        if (err) {
+          return res.status(400).json({
+            error: "Saving Cake in DB failed",
+          });
+        }
+        res.json(products);
+      })
+    );
   });
 };
 
 exports.getProduct = (req, res) => {
+  console.log(req);
   req.product.photo = undefined;
   return res.json(req.product);
 };
@@ -111,14 +118,16 @@ exports.updateProduct = (req, res) => {
       product.photo.contentType = file.photo.type;
     }
     //save to the DB
-    product.save((err, product) => {
-      if (err) {
-        return res.status(400).json({
-          error: "Updation of Cake in DB failed",
-        });
-      }
-      res.json(product);
-    });
+    product.save().then((product) =>
+      product.populate("category").execPopulate((err, products) => {
+        if (err) {
+          return res.status(400).json({
+            error: "No products found",
+          });
+        }
+        res.json(products);
+      })
+    );
   });
 };
 //products listing

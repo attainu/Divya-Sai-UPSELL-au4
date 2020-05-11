@@ -1,231 +1,140 @@
-import { FILTER_BY_CATEGORY, FILTER_BY_SEARCH, SET_SEARCH_TERM } from './types';
+import {
+  FILTER_BY_CATEGORY,
+  FILTER_BY_SEARCH,
+  SET_SEARCH_TERM,
+  UPDATE_PRODUCT,
+  ADD_PRODUCT,
+  FETCH_PRODUCTS,
+  DELETE_PRODUCT,
+} from "./types";
 
 const INITIAL_STATE = {
-       products: [
-            {   
-                product_id:1,
-                product_image:"images/Product_Images/Wedding-Cake1.jpg",
-                product_title:"Chocolate Cake",
-                product_price:1000,
-                category_name:"Wedding Cakes"
-            },
-            {
-                product_id:2,
-                product_image:"images/Product_Images/Wedding-Cake2.jpg",
-                product_title:"Vanilla Cake",
-                product_price:800,
-                category_name:"Wedding Cakes"
-            },
-            {
-                product_id:3,
-                product_image:"images/Product_Images/Wedding-Cake3.jpg",
-                product_title:"Strawberry Cake",
-                product_price:1400,
-                category_name:"Wedding Cakes"
-            },
-            {
-                product_id:4,
-                product_image:"images/Product_Images/Wedding-Cake4.jpg",
-                product_title:"Butter-Scotch Cake",
-                product_price:1600,
-                category_name:"Wedding Cakes"
-            },
-            {   
-                product_id:5,
-                product_image:"images/Product_Images/Wedding-Cake5.jpg",
-                product_title:"PineApple Cake",
-                product_price:1200,
-                category_name:"Wedding Cakes"
-            },
-            {
-                product_id:6,
-                product_image:"images/Product_Images/Wedding-Cake6.jpg",
-                product_title:"Black Forest Cake",
-                product_price:1400,
-                category_name:"Wedding Cakes"
-            },
-            {   
-                product_id:7,
-                product_image:"images/Product_Images/Wedding-Cake7.jpg",
-                product_title:"Dark Chocolate Cake",
-                product_price:1600,
-                category_name:"Wedding Cakes"
-            },
-            {
-                product_id:8,
-                product_image:"images/Product_Images/Wedding-Cake8.jpg",
-                product_title:"Blueberry Cake",
-                product_price:1050,
-                category_name:"Wedding Cakes"
-            },
-            {
-                product_id:9,
-                product_image:"images/Product_Images/Birthday-Cake1.jpg",
-                product_title:"BlackForest Cake",
-                product_price:1050,
-                category_name:"Birthday Cakes"
-            },
-            {
-                product_id:10,
-                product_image:"images/Product_Images/Birthday-Cake2.jpg",
-                product_title:"Strawberry Cake",
-                product_price:1050,
-                category_name:"Birthday Cakes"
-            },
-            {
-                product_id:11,
-                product_image:"images/Product_Images/Birthday-Cake3.jpg",
-                product_title:"Vanilla Chocolate Cake",
-                product_price:1050,
-                category_name:"Birthday Cakes"
-            },
-            {
-                product_id:12,
-                product_image:"images/Product_Images/Birthday-Cake4.jpg",
-                product_title:"Half Century Cake",
-                product_price:1050,
-                category_name:"Birthday Cakes"
-            },
-            {
-                product_id:13,
-                product_image:"images/Product_Images/Birthday-Cake5.jpg",
-                product_title:"One Year Cake",
-                product_price:1050,
-                category_name:"Birthday Cakes"
-            },
-            {
-                product_id:14,
-                product_image:"images/Product_Images/Birthday-Cake6.jpg",
-                product_title:"New Born Cake",
-                product_price:1050,
-                category_name:"Birthday Cakes"
-            },
-            {
-                product_id:15,
-                product_image:"images/Product_Images/Birthday-Cake7.jpg",
-                product_title:"Forty Cake",
-                product_price:1050,
-                category_name:"Birthday Cakes"
-            },
-            {
-                product_id:16,
-                product_image:"images/Product_Images/Birthday-Cake8.jpg",
-                product_title:"Floral Cake",
-                product_price:1050,
-                category_name:"Birthday Cakes"
-            },
-            {
-                product_id:17,
-                product_image:"images/Product_Images/Birthday-Cake9.jpg",
-                product_title:"Fruit Cake",
-                product_price:1050,
-                category_name:"Birthday Cakes"
-            },
-            {
-                product_id:18,
-                product_image:"images/Product_Images/Birthday-Cake10.jpg",
-                product_title:"Roses Cake",
-                product_price:1050,
-                category_name:"Birthday Cakes"
-            }
+  products: [],
+  FilteredProducts: [],
+  searchterm: "",
+};
+//   {
+//     product_id:1,
+//     product_image:"images/Product_Images/Wedding-Cake1.jpg",
+//     product_title:"Chocolate Cake",
+//     product_price:1000,
+//     category_name:"Wedding Cakes"
+// }
 
-    ],
-    FilteredProducts:[],
-    searchterm:""
-  };
-  
-  export const productReducer = (state = INITIAL_STATE, action) => {
-    let stateCopy = JSON.parse(JSON.stringify(state));
-    let filtered = [];
-    let filter=[];
-    switch (action.type) {
-      
-        case FILTER_BY_CATEGORY: 
-                                console.log("state", action.type, action.payload.category );
-                                if(action.payload.category.length!==0 && action.payload.price===0){
-                                    console.log("Only category is given");
-                                    var innerfilter = [];
+export const productReducer = (state = INITIAL_STATE, action) => {
+  let stateCopy = JSON.parse(JSON.stringify(state));
+  let filtered = [];
+  let filter = [];
+  switch (action.type) {
+    case FILTER_BY_CATEGORY:
+      console.log("state", action.type, action.payload.category);
+      if (action.payload.category.length !== 0 && action.payload.price === 0) {
+        console.log("Only category is given");
+        var innerfilter = [];
 
-                                    filter =  action.payload.category.map((cat)=>{
-                                                 innerfilter = stateCopy.products.filter((product)=>
-                                                    {
-                                                    console.log(product.category_name,cat);
-                                                    return (product.category_name===cat)
-                                                    });
-                                                console.log(innerfilter);
-                                                return innerfilter;
-                                    })
+        filter = action.payload.category.map((cat) => {
+          innerfilter = stateCopy.products.filter((product) => {
+            console.log(product.category_name, cat);
+            return product.category_name === cat;
+          });
+          console.log(innerfilter);
+          return innerfilter;
+        });
 
-                                    let [...args] = filter;
-                                    args.map((array)=>{
-                                        array.map((elem)=>{
-                                            filtered.push(elem);
-                                            
-                                        })
-                                    })
-                                              
-                                            }
+        let [...args] = filter;
+        args.map((array) => {
+          array.map((elem) => {
+            filtered.push(elem);
+          });
+        });
+      }
 
-                                if(action.payload.category.length===0 && action.payload.price!==0){
-                                    console.log("Only price is given");
-                                    filtered = stateCopy.products.filter((product)=>
-                                                {
-                                                    return (product.product_price<=action.payload.price)
-                                                });
-                                            }
-                                if(action.payload.category.length!==0 && action.payload.price!==0){
+      if (action.payload.category.length === 0 && action.payload.price !== 0) {
+        console.log("Only price is given");
+        filtered = stateCopy.products.filter((product) => {
+          return product.product_price <= action.payload.price;
+        });
+      }
+      if (action.payload.category.length !== 0 && action.payload.price !== 0) {
+        console.log("Both category and price are given");
+        var innerfilter = [];
 
-                                    console.log("Both category and price are given");
-                                    var innerfilter = [];
+        filter = action.payload.category.map((cat) => {
+          innerfilter = stateCopy.products.filter((product) => {
+            console.log(product.category_name, cat);
+            return (
+              product.category_name === cat &&
+              product.product_price <= action.payload.price
+            );
+          });
+          console.log(innerfilter);
+          return innerfilter;
+        });
 
-                                    filter =  action.payload.category.map((cat)=>{
-                                                 innerfilter = stateCopy.products.filter((product)=>
-                                                    {
-                                                    console.log(product.category_name,cat);
-                                                    return (product.category_name===cat && 
-                                                        product.product_price<=action.payload.price)
-                                                    });
-                                                console.log(innerfilter);
-                                                return innerfilter;
-                                    })
+        let [...args] = filter;
+        args.map((array) => {
+          array.map((elem) => {
+            filtered.push(elem);
+          });
+        });
+      }
 
-                                    let [...args] = filter;
-                                    args.map((array)=>{
-                                        array.map((elem)=>{
-                                            filtered.push(elem);
-                                            
-                                        })
-                                    })
-                                }
-                                                                     
-                                console.log(filtered);
-                                
-                                return {...state, FilteredProducts:filtered};
-    case FILTER_BY_SEARCH:  
-                            console.log("state", action.type, action.payload);
-                            stateCopy.searchterm = action.payload;
-                            filter = stateCopy.products.filter((product)=>
-                                                {
-                                                    return (product.category_name.toLowerCase().indexOf(action.payload.toLowerCase())!==-1 ||
-                                                    product.product_title.toLowerCase().indexOf(action.payload.toLowerCase())!==-1);
-                                                 
-                                                })
-                            console.log(filter)
-                            filter.map((product)=>{
-                                filtered.push(product);
-                            })
+      console.log(filtered);
 
+      return { ...state, FilteredProducts: filtered };
+    case FILTER_BY_SEARCH:
+      console.log("state", action.type, action.payload);
+      stateCopy.searchterm = action.payload;
+      filter = stateCopy.products.filter((product) => {
+        return (
+          product.category_name.name
+            .toLowerCase()
+            .indexOf(action.payload.toLowerCase()) !== -1 ||
+          product.product_title
+            .toLowerCase()
+            .indexOf(action.payload.toLowerCase()) !== -1
+        );
+      });
+      console.log(filter);
+      filter.map((product) => {
+        filtered.push(product);
+      });
 
-                            
-                            return {...state, FilteredProducts:filtered,searchterm:action.payload};
+      return {
+        ...state,
+        FilteredProducts: filtered,
+        searchterm: action.payload,
+      };
+    case FETCH_PRODUCTS:
+      return {
+        ...state,
+        products: action.payload,
+      };
+    case ADD_PRODUCT:
+      return {
+        ...state,
+        products: [...state.products, action.payload],
+      };
+    case UPDATE_PRODUCT:
+      const updatedProds = state.products.filter(
+        (prod) => prod.product_id !== action.payload.product_id
+      );
+      return {
+        ...state,
+        products: [...updatedProds, action.payload],
+      };
+    case DELETE_PRODUCT:
+      const newProds = state.products.filter(
+        (prod) => prod.product_id !== action.payload
+      );
+      return { ...state, products: [...newProds] };
 
-    // case SET_SEARCH_TERM: 
+    // case SET_SEARCH_TERM:
     //                         console.log(action.type, action.payload);
     //                         stateCopy.searchterm = action.payload;
     //                         return {...state, searchterm:action.payload};
-                                
-      default:
-        return state;
-    }
-    
-  };
+
+    default:
+      return state;
+  }
+};
