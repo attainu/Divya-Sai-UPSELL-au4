@@ -2,14 +2,14 @@ const mongoose = require("mongoose");
 const { ObjectId } = mongoose.Schema;
 
 const ProductCartSchema = new mongoose.Schema({
-  product: {
+  productid: {
     type: ObjectId,
     ref: "Product",
   },
-  name: String,
-  count: Number,
-  price: Number,
-  deliveryDT: Date,
+  producttitle: String,
+  quantity: Number,
+  productprice: Number,
+  deliverydate: Date,
 });
 
 const ProductCart = mongoose.model("ProductCart", ProductCartSchema);

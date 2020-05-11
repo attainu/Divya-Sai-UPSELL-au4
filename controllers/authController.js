@@ -49,7 +49,6 @@ exports.signin = (req, res) => {
       });
     }
     const secret = process.env.SECRET;
-    console.log(secret);
     const token = jwt.sign({ _id: user._id }, secret);
     res.cookie("token", token, { expire: new Date() + 9999 });
     const { _id, name, email, role } = user;
@@ -78,8 +77,6 @@ exports.isSignedIn = expressJwt({
 });
 //Custom middlewares
 exports.isAuthenticated = (req, res, next) => {
-  console.log(req.profile);
-  console.log(req.auth);
   let checker = req.profile && req.auth && req.profile._id == req.auth._id;
   if (!checker) {
     return res.status(403).json({

@@ -56,3 +56,17 @@ exports.updateStatus = (req, res) => {
     }
   );
 };
+exports.successOrder = (req, res) => {
+  Order.update(
+    { transaction_id: req.body.txnId },
+    { $set: { products: req.body.products, amount: req.body.amount } },
+    (err, order) => {
+      if (err) {
+        return res.status(400).json({
+          error: "Cannot update order status",
+        });
+      }
+      res.json(order);
+    }
+  );
+};

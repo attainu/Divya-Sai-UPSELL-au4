@@ -17,6 +17,7 @@ const {
   getAllOrders,
   getOrderStatus,
   updateStatus,
+  successOrder,
 } = require("../controllers/orderController");
 
 //Params
@@ -32,6 +33,13 @@ router.post(
   pushOrderInPurchaseList,
   updateStock,
   createOrder
+);
+router.post(
+  "/order/success/:userId",
+  isSignedIn,
+  isAuthenticated,
+  pushOrderInPurchaseList,
+  successOrder
 );
 //read
 router.get(

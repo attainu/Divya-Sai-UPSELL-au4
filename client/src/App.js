@@ -23,6 +23,7 @@ import AdminRoute from "./auth/helper/AdminRoutes";
 import PrivateRoute from "./auth/helper/PrivateRoutes";
 import UserDashboard from "./Pages/User/UserDashboard";
 import AdminDashboard from "./Pages/User/AdminDashboard";
+import PaymentComplete from "./Components/PaymentComplete";
 
 class App extends React.Component {
   render() {
@@ -42,6 +43,10 @@ class App extends React.Component {
           <Route path="/checkout" component={CheckoutPage} />
           <Route path="/trackorder" component={TrackYourOrderPage} />
           <PrivateRoute path="/user/dashboard" component={UserDashboard} />
+          <PrivateRoute
+            path="/payment-complete/:txnId"
+            component={PaymentComplete}
+          />
           <AdminRoute path="/admin/dashboard" component={AdminDashboard} />
         </Switch>
         <Footer />

@@ -19,12 +19,15 @@
     "express-validator": "^6.4.0",
     "formidable": "^1.2.2",
     "i": "^0.3.6",
+    "instamojo-nodejs": "0.0.5",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
     "mongoose": "^5.9.9",
     "morgan": "^1.10.0",
     "node-geocoder": "^3.27.0",
     "slugify": "^1.4.0",
+    "stripe": "^8.50.0",
+    "url": "^0.11.0",
     "uuid": "^7.0.3"
   },
   "devDependencies": {

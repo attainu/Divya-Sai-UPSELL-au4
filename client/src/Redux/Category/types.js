@@ -1,1 +1,4 @@
 export const FETCH_SET_CATS = "FETCH_SET_CATS";
+export const ADD_CATEGORY = "ADD_CATEGORY";
+export const DELETE_CATEGORY = "DELETE_CATEGORY";
+export const UPDATE_CATEGORY = "UPDATE_CATEGORY";

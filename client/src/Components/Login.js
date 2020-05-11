@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { signin, authenticate, isAuthenticated } from "../auth/helper";
-const { user } = isAuthenticated();
+
 class Login extends Component {
   constructor() {
     super();
@@ -12,6 +12,11 @@ class Login extends Component {
       loading: false,
       didRedirect: false,
     };
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.didRedirect !== this.state.didRedirect) {
+      console.log("Hello from update");
+    }
   }
 
   handleChange = (name) => (event) => {
@@ -24,13 +29,13 @@ class Login extends Component {
   onSubmit = (event) => {
     event.preventDefault();
     const { email, password } = this.state;
-    this.setState({ error: false, loading: true });
 
     signin({ email, password })
       .then((data) => {
         if (data.error) {
           this.setState({ error: data.error, loading: false });
         } else {
+          this.setState({ error: false, loading: true });
           authenticate(data, () => {
             this.setState({ didRedirect: true });
           });
@@ -40,10 +45,10 @@ class Login extends Component {
   };
   performRedirect = () => {
     if (this.state.didRedirect) {
-      console.log(user);
-      if (user && user.role === 1) {
+      console.log(isAuthenticated().user);
+      if (isAuthenticated().user && isAuthenticated().user.role === 1) {
         return <Redirect to="/admin/dashboard" />;
-      } else if (user && user.role === 0) {
+      } else if (isAuthenticated().user && isAuthenticated().user.role === 0) {
         return <Redirect to="/user/dashboard" />;
       } else {
         return <p>Something went wrong</p>;
