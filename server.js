@@ -1,11 +1,12 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const morgan = require("morgan");
+const path = require("path");
+const publicPath = path.join(__dirname, "client/build");
 
 const connectDB = require("./config/db");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
-
 //API Routes
 const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/user");
@@ -22,6 +23,7 @@ connectDB();
 //Route file
 
 const app = express();
+app.use(express.static(publicPath));
 
 //body paser
 app.use(express.json());
@@ -41,6 +43,9 @@ app.use("/api", categoryRoutes);
 app.use("/api", productRoutes);
 app.use("/api", orderRoutes);
 app.use("/api", stripeRoutes);
+app.get("*", (req, res) => {
+  res.sendFile(path.join(publicPath, "index.html"));
+});
 //err handler
 
 const PORT = process.env.PORT || 5000;
