@@ -83,19 +83,22 @@ export const productReducer = (state = INITIAL_STATE, action) => {
 
       return { ...state, FilteredProducts: filtered };
     case FILTER_BY_SEARCH:
-      console.log("state", action.type, action.payload);
       stateCopy.searchterm = action.payload;
       filter = stateCopy.products.filter((product) => {
-        return (
-          product.category_name.name
-            .toLowerCase()
-            .indexOf(action.payload.toLowerCase()) !== -1 ||
-          product.product_title
-            .toLowerCase()
-            .indexOf(action.payload.toLowerCase()) !== -1
-        );
+        console.log("Filter", product);
+        if (product.category_name) {
+          return (
+            product.category_name.name
+              .toLowerCase()
+              .indexOf(action.payload.toLowerCase()) !== -1 ||
+            product.product_title
+              .toLowerCase()
+              .indexOf(action.payload.toLowerCase()) !== -1
+          );
+        } else {
+          return null;
+        }
       });
-      console.log(filter);
       filter.map((product) => {
         filtered.push(product);
       });
