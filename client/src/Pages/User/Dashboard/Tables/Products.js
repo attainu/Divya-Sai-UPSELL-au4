@@ -50,7 +50,11 @@ const Products = (props) => {
     //
     console.log(values);
     event.preventDefault();
-    props.createProduct(user._id, token, formData);
+    props.createProduct(
+      isAuthenticated().user._id,
+      isAuthenticated().token,
+      formData
+    );
     setOpen(false);
   };
   const successMessage = () => {
