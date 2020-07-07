@@ -1,19 +1,16 @@
 import React from "react";
 import { connect } from "react-redux";
-import { fetchOrders } from "../../../../Redux/orders/OrdersActions";
 import { isAuthenticated } from "../../../../auth/helper/index";
-import UpdateOrder from "./UpdateOrder";
 const { user, token } = isAuthenticated();
-class Orders extends React.Component {
+class UserOrders extends React.Component {
   constructor(props) {
     super(props);
   }
   componentDidMount() {
-    this.props.fetchOrders(isAuthenticated().user._id, isAuthenticated().token);
-    // console.log(isAuthenticated().user);
+    console.log(this.props.Orders);
   }
   render() {
-    let ordersData = this.props.orders.map((order) => {
+    let ordersData = this.props.Orders.map((order) => {
       if (order.products.length) {
         return (
           <tr>
@@ -28,14 +25,14 @@ class Orders extends React.Component {
                 <label for="checkbox1"></label>
               </span>
             </td>
-            <td>{order.id}</td>
-            <td>{order.products[0].producttitle}</td>
-
-            <td>{order.price}</td>
-            <td>{order.status}</td>
+            <td>{order.transaction_id}</td>
             <td>
-              <UpdateOrder orderId={order._id} />
+              {order.products.length > 1
+                ? `${order.products[0].producttitle} + ${order.products.length}`
+                : `${order.products[0].producttitle}`}
             </td>
+            <td>{order.amount}</td>
+            <td>{order.status}</td>
           </tr>
         );
       }
@@ -64,13 +61,12 @@ class Orders extends React.Component {
                 </th>
                 <th>Order Id</th>
                 <th>Product Title</th>
-                <th>Product Price</th>
+                <th>Total Price</th>
                 <th>Status</th>
-                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
-              {this.props.orders.length === 0 ? <tr></tr> : ordersData}
+              {this.props.Orders.length === 0 ? <tr></tr> : ordersData}
             </tbody>
           </table>
         </div>
@@ -80,10 +76,8 @@ class Orders extends React.Component {
 }
 const mapStatetoProps = (state) => {
   return {
-    orders: state.ordersReducer.orders,
+    orders: state.ordersReducer.userOrders,
   };
 };
-const mapDispatchtoProps = {
-  fetchOrders,
-};
-export default connect(mapStatetoProps, mapDispatchtoProps)(Orders);
+const mapDispatchtoProps = {};
+export default connect(mapStatetoProps, mapDispatchtoProps)(UserOrders);

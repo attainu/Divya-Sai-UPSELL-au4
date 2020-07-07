@@ -28,6 +28,20 @@ export const signin = (user) => {
     })
     .catch((err) => console.log(err));
 };
+export const resetPassword = (email, password) => {
+  return fetch(`${API}/resetpassword`, {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email, password }),
+  })
+    .then((res) => {
+      return res.json();
+    })
+    .catch((err) => console.log(err));
+};
 
 export const authenticate = (data, next) => {
   if (typeof window !== "undefined") {

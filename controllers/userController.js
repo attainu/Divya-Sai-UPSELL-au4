@@ -1,5 +1,5 @@
 const User = require("../models/User");
-const Order = require("../models/Order");
+const { Order, ProductCart } = require("../models/Order");
 exports.getUserById = (req, res, next, id) => {
   User.findById(id).exec((err, user) => {
     if (err || !user) {
@@ -39,6 +39,26 @@ exports.updateUser = (req, res) => {
       res.json(user);
     }
   );
+};
+
+exports.passwordReset = (req, res) => {
+  console.log("hello");
+  User.findOne({ email: req.body.email }, function (err, user) {
+    if (user) {
+      if (req.body.password.length) {
+        user.password = req.body.password;
+      }
+      user.save(function (err) {
+        if (err) throw err;
+        res.status(200).json(user);
+      });
+      return;
+    } else {
+      res.status(400).json({
+        error: "No user found",
+      });
+    }
+  });
 };
 
 exports.userPurchaseList = (req, res) => {

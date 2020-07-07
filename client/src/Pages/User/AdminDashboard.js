@@ -4,12 +4,12 @@ import Products from "./Dashboard/Tables/Products";
 import Orders from "./Dashboard/Tables/Orders";
 import { connect } from "react-redux";
 import { fetchCats } from "../../Redux/Category/categoryActions";
-
+import Profile from "./Dashboard/Profile";
+import { isAuthenticated } from "../../auth/helper";
 
 const fetchSetCategories = (props) => {
   props.fetchCats();
 };
-
 
 // const fetchSetOrders = (props) => {
 //   fetch(`${API}/orders`, {
@@ -66,7 +66,7 @@ const AdminDashboard = (props) => {
           <div class="col-xs-9">
             <div class="tab-content">
               <div class="tab-pane active" id="home">
-                Home Tab.
+                <Profile userData={isAuthenticated().user} />
               </div>
               <div class="tab-pane" id="profile">
                 <Categories />

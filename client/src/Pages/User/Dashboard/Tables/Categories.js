@@ -56,7 +56,11 @@ const Categories = (props) => {
                   <button
                     onClick={(e) => {
                       e.preventDefault();
-                      addCategory(user._id, isAuthenticated().token, catName);
+                      addCategory(
+                        isAuthenticated().user._id,
+                        isAuthenticated().token,
+                        catName
+                      );
                     }}
                     class="btn btn-primary"
                   >

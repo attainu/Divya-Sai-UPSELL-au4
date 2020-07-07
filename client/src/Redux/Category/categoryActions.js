@@ -47,6 +47,7 @@ export const addCategory = (userId, token, name) => {
     })
       .then((res) => {
         res.json().then((data) => {
+          console.log(data);
           let payload = {
             id: data.cat._id,
             category_name: data.cat.name,
