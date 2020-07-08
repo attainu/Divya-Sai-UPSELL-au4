@@ -8,9 +8,12 @@ import {
   DELETE_PRODUCT,
 } from "./types";
 import { API } from "../../backend";
-export const FILTER_BY_CATEGORY_METHOD = (category, price) => {
+export const FILTER_BY_CATEGORY_METHOD = (category, price, products) => {
   return (dispatch) => {
-    dispatch({ type: FILTER_BY_CATEGORY, payload: { category, price } });
+    dispatch({
+      type: FILTER_BY_CATEGORY,
+      payload: { category, price, products },
+    });
   };
 };
 
@@ -39,6 +42,7 @@ export const getAllProducts = () => {
     })
       .then((res) => {
         res.json().then((data) => {
+          console.log(data);
           const payload = data.map((product) => ({
             product_id: product._id,
             product_title: product.name,
@@ -46,7 +50,7 @@ export const getAllProducts = () => {
             category_name: product.category,
             product_description: product.description,
           }));
-          console.log(payload);
+
           dispatch({
             type: FETCH_PRODUCTS,
             payload: payload,
@@ -136,5 +140,19 @@ export const deleteProduct = (userId, token, productId) => {
         });
       })
       .catch((err) => console.log(err));
+  };
+};
+
+export const setFilteredProducts = (catName, isChecked, products) => {
+  return (dispatch) => {
+    const payload = {
+      catName,
+      isChecked,
+      products,
+    };
+    dispatch({
+      type: "SET_FILTER",
+      payload: payload,
+    });
   };
 };

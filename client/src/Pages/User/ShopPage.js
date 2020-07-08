@@ -10,6 +10,7 @@ import { connect } from "react-redux";
 import {
   FILTER_BY_CATEGORY_METHOD,
   getAllProducts,
+  setFilteredProducts,
 } from "./../../Redux/Product/ProductActions";
 import { fetchCats } from "./../../Redux/Category/categoryActions";
 
@@ -34,9 +35,17 @@ class ShopPage extends Component {
     ) {
       this.props.FILTER_BY_CATEGORY_METHOD(
         this.state.selectedCategory,
-        this.state.pricevalue
+        this.state.pricevalue,
+        this.props.products
       );
     }
+  }
+  filterProducts(e) {
+    this.props.setFilteredProducts(
+      e.target.value,
+      e.target.checked,
+      this.props.products
+    );
   }
 
   render() {
@@ -68,7 +77,7 @@ class ShopPage extends Component {
               class="range-slider"
               type="range"
               min="0"
-              max="2000"
+              max="4000"
               step="200"
               value={this.state.pricevalue}
               onChange={(event) => {
@@ -91,27 +100,8 @@ class ShopPage extends Component {
                       type="checkbox"
                       value={category.category_name}
                       key={index}
-                      onClick={() => {
-                        if (category.isChecked) {
-                          category.isChecked = false;
-                          let newCategory = category.category_name;
-                          let arrSelectedCategory = this.state.selectedCategory.slice();
-                          let index = arrSelectedCategory.indexOf(newCategory);
-                          arrSelectedCategory.splice(index, 1);
-                          this.setState({
-                            selectedCategory: arrSelectedCategory,
-                            currentPage: 1,
-                          });
-                        } else {
-                          category.isChecked = true;
-                          let newCategory = category.category_name;
-                          let arrSelectedCategory = this.state.selectedCategory.slice();
-                          arrSelectedCategory.push(newCategory);
-                          this.setState({
-                            selectedCategory: arrSelectedCategory,
-                            currentPage: 1,
-                          });
-                        }
+                      onClick={(e) => {
+                        this.filterProducts(e);
                       }}
                     />
                     {category.category_name}
@@ -122,29 +112,29 @@ class ShopPage extends Component {
           </div>
           <div className="product-wrapper">
             {this.state.pricevalue == 0 &&
-              this.state.selectedCategory.length === 0 &&
-              this.props.searchterm === "" && (
-                <div>
-                  <ProductList products={currentProducts} />
-                  <Pagination
-                    productsPerPage={this.state.productsPerPage}
-                    totalProducts={this.props.products.length}
-                    paginate={paginate}
-                  />
-                </div>
-              )}
-
-            {(this.state.pricevalue !== 0 ||
-              this.state.selectedCategory.length !== 0 ||
-              this.props.searchterm !== "") && (
+            this.props.filtered.length === 0 &&
+            this.props.searchterm === "" ? (
               <div>
-                <ProductList products={currentfilteredProducts} />
+                <ProductList products={currentProducts} />
                 <Pagination
                   productsPerPage={this.state.productsPerPage}
-                  totalProducts={this.props.filtered.length}
+                  totalProducts={this.props.products.length}
                   paginate={paginate}
                 />
               </div>
+            ) : (
+              (this.state.pricevalue !== 0 ||
+                this.props.filtered.length !== 0 ||
+                this.props.searchterm !== "") && (
+                <div>
+                  <ProductList products={currentfilteredProducts} />
+                  <Pagination
+                    productsPerPage={this.state.productsPerPage}
+                    totalProducts={this.props.filtered.length}
+                    paginate={paginate}
+                  />
+                </div>
+              )
             )}
           </div>
         </div>
@@ -157,7 +147,7 @@ let mapStatetoProps = (state) => {
   return {
     categories: state.categoryReducer.categories,
     products: state.productReducer.products,
-    filtered: state.productReducer.FilteredProducts,
+    filtered: state.filterReducer.FilteredProducts,
     searchterm: state.productReducer.searchterm,
   };
 };
@@ -166,6 +156,7 @@ let mapDispatchtoProps = {
   FILTER_BY_CATEGORY_METHOD,
   getAllProducts,
   fetchCats,
+  setFilteredProducts,
 };
 
 export default connect(mapStatetoProps, mapDispatchtoProps)(ShopPage);

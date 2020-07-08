@@ -40,7 +40,7 @@ class App extends React.Component {
           <Route path="/login-register" component={Login_Register_Page} />
           <Route path="/productdetails/:id" component={ProductDetailsPage} />
           <Route path="/cart" component={CartPage} />
-          <Route path="/checkout" component={CheckoutPage} />
+          <PrivateRoute path="/checkout" component={CheckoutPage} />
           <Route path="/trackorder" component={TrackYourOrderPage} />
           <PrivateRoute path="/user/dashboard" component={UserDashboard} />
           <PrivateRoute

@@ -27,7 +27,8 @@ class CheckOutForm extends Component {
       })
       .catch((err) => console.log(err));
   };
-  makePayment = (token) => {
+  makePayment = () => {
+    const { user, token } = isAuthenticated();
     const data = {
       purpose: "Cake Order Payment",
       amount: this.props.total,
@@ -79,12 +80,7 @@ class CheckOutForm extends Component {
         <div className="guest-details">
           <div className="form-row">
             <h3 className="col-md-6 no-padding">Contact Information</h3>
-            <span
-              className="col-md-6 no-padding"
-              style={{ "margin-top": "25px", "text-align": "right" }}
-            >
-              Already have an account? <Link to="/login-register">Login</Link>
-            </span>
+
             <div className="form-group">
               <input
                 type="text"
@@ -183,7 +179,7 @@ class CheckOutForm extends Component {
               name="payoption"
               value="Online Payment"
             />
-            Pay With Stripe
+            Pay With InstaMojo
           </div>
 
           {/* <StripeCheckout

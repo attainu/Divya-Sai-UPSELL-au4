@@ -132,7 +132,7 @@ exports.updateProduct = (req, res) => {
 };
 //products listing
 exports.getAllProducts = (req, res) => {
-  let limit = req.query.limit ? parseInt(req.query.limit) : 8;
+  let limit = req.query.limit ? parseInt(req.query.limit) : 50;
   let sortBy = req.query.sortBy ? req.query.sortBy : "_id";
   Product.find()
     .select("-photo")

@@ -26,62 +26,6 @@ export const productReducer = (state = INITIAL_STATE, action) => {
   let filtered = [];
   let filter = [];
   switch (action.type) {
-    case FILTER_BY_CATEGORY:
-      console.log("state", action.type, action.payload.category);
-      if (action.payload.category.length !== 0 && action.payload.price === 0) {
-        console.log("Only category is given");
-        var innerfilter = [];
-
-        filter = action.payload.category.map((cat) => {
-          innerfilter = stateCopy.products.filter((product) => {
-            console.log(product.category_name, cat);
-            return product.category_name === cat;
-          });
-          console.log(innerfilter);
-          return innerfilter;
-        });
-
-        let [...args] = filter;
-        args.map((array) => {
-          array.map((elem) => {
-            filtered.push(elem);
-          });
-        });
-      }
-
-      if (action.payload.category.length === 0 && action.payload.price !== 0) {
-        console.log("Only price is given");
-        filtered = stateCopy.products.filter((product) => {
-          return product.product_price <= action.payload.price;
-        });
-      }
-      if (action.payload.category.length !== 0 && action.payload.price !== 0) {
-        console.log("Both category and price are given");
-        var innerfilter = [];
-
-        filter = action.payload.category.map((cat) => {
-          innerfilter = stateCopy.products.filter((product) => {
-            console.log(product.category_name, cat);
-            return (
-              product.category_name === cat &&
-              product.product_price <= action.payload.price
-            );
-          });
-          console.log(innerfilter);
-          return innerfilter;
-        });
-
-        let [...args] = filter;
-        args.map((array) => {
-          array.map((elem) => {
-            filtered.push(elem);
-          });
-        });
-      }
-
-      console.log(filtered);
-
-      return { ...state, FilteredProducts: filtered };
     case FILTER_BY_SEARCH:
       stateCopy.searchterm = action.payload;
       filter = stateCopy.products.filter((product) => {
@@ -137,6 +81,102 @@ export const productReducer = (state = INITIAL_STATE, action) => {
     //                         stateCopy.searchterm = action.payload;
     //                         return {...state, searchterm:action.payload};
 
+    default:
+      return state;
+  }
+};
+
+const FILTER_INIT_STATE = {
+  FilteredProducts: [],
+};
+
+export const filterReducer = (state = FILTER_INIT_STATE, action) => {
+  let filtered = [];
+  let filter = [];
+  switch (action.type) {
+    case FILTER_BY_CATEGORY:
+      const { products } = action.payload;
+      if (action.payload.category.length !== 0 && action.payload.price === 0) {
+        console.log("Only category is given");
+        var innerfilter = [];
+
+        filter = action.payload.category.map((cat) => {
+          innerfilter = products.filter((product) => {
+            console.log(product.category_name, cat);
+            return product.category_name === cat;
+          });
+          console.log(innerfilter);
+          return innerfilter;
+        });
+
+        let [...args] = filter;
+        args.map((array) => {
+          array.map((elem) => {
+            filtered.push(elem);
+          });
+        });
+      }
+
+      if (action.payload.category.length === 0 && action.payload.price !== 0) {
+        console.log("Only price is given");
+        filtered = products.filter((product) => {
+          return product.product_price <= action.payload.price;
+        });
+      }
+      if (action.payload.category.length !== 0 && action.payload.price !== 0) {
+        console.log("Both category and price are given");
+        var innerfilter = [];
+
+        filter = action.payload.category.map((cat) => {
+          innerfilter = products.filter((product) => {
+            console.log(product.category_name, cat);
+            return (
+              product.category_name === cat &&
+              product.product_price <= action.payload.price
+            );
+          });
+          console.log(innerfilter);
+          return innerfilter;
+        });
+
+        let [...args] = filter;
+        args.map((array) => {
+          array.map((elem) => {
+            filtered.push(elem);
+          });
+        });
+      }
+
+      console.log(filtered);
+
+      return { ...state, FilteredProducts: filtered };
+    case "SET_FILTER":
+      const { catName, isChecked } = action.payload;
+      let updatedProducts;
+      if (catName && action.payload.products) {
+        const { products } = action.payload;
+        if (isChecked) {
+          updatedProducts = products.filter((product) => {
+            // console.log(product);
+            return (
+              product.category_name.name
+                .toLowerCase()
+                .indexOf(catName.toLowerCase()) > -1
+            );
+          });
+          return {
+            ...state,
+            FilteredProducts: [...state.FilteredProducts, ...updatedProducts],
+          };
+        } else {
+          updatedProducts = state.FilteredProducts.filter((product) => {
+            return (
+              product.category_name.name.toLowerCase() !== catName.toLowerCase()
+            );
+          });
+          return { ...state, FilteredProducts: updatedProducts };
+        }
+      }
     default:
       return state;
   }
